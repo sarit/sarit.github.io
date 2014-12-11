@@ -1,0 +1,26 @@
+#items {
+	float: right;
+	width: 260px;
+	padding-bottom: 10px;
+	margin:0 0 10px 20px;
+	/* rgba with ie compatibility */
+	background-color: transparent;
+	background-color: rgba(255,255,255,0.4);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#20ffffff,endColorstr=#20ffffff);
+	  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#20ffffff,endColorstr=#20ffffff)";
+  }
+#items h2:before { content: none; counter-increment: none; }
+#items ul {
+	margin: 0 0 0 20px;
+	padding: 0 0 5px;
+	list-style-type: none;
+	}
+#items ul ul {
+	font-size: 90%;
+	}
+#items ul a {
+	font-family: "arial";
+	text-decoration: none;
+	color: #0000FF;
+	}
+#items ul a:hover { color: #0066FF }

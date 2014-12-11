@@ -1,0 +1,67 @@
+#container {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left:auto;
+  margin-right:auto;
+  width:80%;
+}
+a {
+  text-decoration: none;
+  color: #0000FF;
+}
+a:hover {
+  color: #0066FF;
+}
+.example img {
+  border:1px solid black;
+}
+.example {
+  
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+}
+body {
+  padding-bottom: 20pt;
+  counter-reset: h1counter;
+  counter-reset: h2counter;
+}
+.title {
+  display:block;
+  font-size:250%;
+  font-weight:bold;
+  margin-bottom:10pt;
+}
+h1:before {
+  content: "back to top";
+  }
+h1:first-child:after { 
+  content:none;
+  }
+h1 {
+  counter-increment: h1counter;
+  counter-reset:h2counter;
+  }
+h2 {
+  counter-increment:h2counter;
+  counter-reset:h3counter;
+  }
+h3 {
+  counter-increment:h3counter;
+  counter-reset:h4counter;
+  }
+h4 {
+  counter-increment:h4counter;
+  counter-reset:h5counter;
+  }
+h1:before {
+  content: counter(h1counter) ".\0000a0\0000a0";
+  }
+h2:before {
+  content: counter(h1counter) "." counter(h2counter) ".\0000a0\0000a0";
+  }
+h3:before {
+  content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+  }
+h4:before {
+  content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
+  }

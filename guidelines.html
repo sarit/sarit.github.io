@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" href="style.css" type="text/css"/>
+  <link rel="stylesheet" href="jquery.stoc.css" type="text/css"/>
+  <title>SARIT Encoding Guidelines</title>
+</head>
+<body>
+<div id="container">
+<div id="items"></div>
+
+<div class="title">
+  <p>SARIT Guidelines for Encoding Sanskrit Texts</p>
+</div>
+
+<p><b>What is SARIT?</b> <a href="http://sarit.indology.info">SARIT</a> (“<b>S</b>earch <b>a</b>nd <b>R</b>etrieval of <b>I</b>ndic <b>T</b>exts”) is a collection of digital texts in Sanskrit and other Indian languages. SARIT texts are intended to be high-quality scholarly texts that can be used for research and teaching. They are:</p>
+  <ul>
+    <li><b>TEI-compliant</b>: SARIT texts are XML documents that are prepared in accordance with the guidelines of the TEI. There is an enormous difference between plain text documents and documents that are marked-up so as to reflect the structure and content of the text.</li>
+    <li><b>versioned</b>: SARIT texts include detailed information about their history, from the source-texts on which they are based, to successive modifications that have been made to the digital documents.</li>
+    <li><b>licensed</b>: SARIT texts are made available under <a href="https://creativecommons.org/">Creative Commons</a> licenses, which makes them freely available to all, while protecting the attribution rights of the persons who created the texts.</li>
+  </ul>
+
+<p><b>What is the TEI?</b> The <a href="http://www.tei-c.org">TEI</a> (“<b>T</b>ext <b>E</b>ncoding <b>I</b>nitiative”) is an organization that publishes guidelines for encoding texts in XML (the e<b>X</b>tensible <b>M</b>arkup <b>L</b>anguage). TEI-XML in principle reflects the <em>semantic</em> structure of a text rather than the way that texts are presented on a printed page. The TEI guidelines are actively maintained and widely followed in almost all digital-texts projects.</p>
+
+<p><b>How to use this document.</b> This document provides guidelines for encoding Sanskrit texts. It is based on the <a href="http://www.tei-c.org/Guidelines/P5/">P5 Guidelines</a> published by the TEI. Following these guidelines should produce a document that is conformant with the schemas that the TEI provides. A <em>schema</em> is a formal document that specifies the elements in a document, their order, and their allowable attributes. SARIT texts must conform to these schemas, and you are invited to use them when preparing your documents.</p>
+
+<p>At this point, most of the texts on SARIT are digital reproductions of printed editions. Preparing a digital text will therefore involve (1) preparing a TEI-XML document with a <em>header</em> that provides, among other things, the source document(s) of the digital text, and (2) converting the source document into a digital text by adding XML markup. This document provides TEI-conformant guidelines for “translating” from a printed source to a digital text.</p>
+
+<h1>Document structure</h1>
+
+<p>SARIT texts are TEI-XML files. The first line must be an XML declaration:</p>
+
+<pre class="prettyprint linenums">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+</pre>
+
+<p>The rest of the document is contained within the <code class="prettyprint">&lt;TEI&gt;</code> element, which must contain a namespace declaration:</p>
+
+<pre class="prettyprint linenums">
+&lt;TEI xmlns="http://www.tei-c.org/ns/1.0"&gt;
+    ...
+&lt;/TEI&gt;
+</pre>
+
+<p>The rest of the document consists of two parts: the <b>TEI Header</b> and the <b>text</b>. The TEI Header contains all of the <em>metadata</em> about the document. The text
+
+<h2>The TEI Header</h2>
+
+<p>SARIT provides a <a href="https://github.com/paddymcall/SARIT/blob/master/00-SARIT-TEI-header-template.xml">template</a> for the TEI header.</p>
+
+<h3>File Description</h3>
+
+<h4>Title Statement</h4>
+
+<h4>Publication Statement</h4>
+
+<h4>Source Description</h4>
+
+<h3>Encoding Description</h3>
+
+<h3>Revision Description</h3>
+
+<h2>Text structure</h2>
+
+<h3>Top-level elements</h3>
+
+<p>The Sanskrit text is contained within the <code class="prettyprint">&lt;text&gt;</code> element. SARIT requires this element to have two attributes:</p>
+  <ul>
+    <li><code class="prettyprint">@xml:lang</code>: this specifies the language and script of the text. The options are <code class="prettyprint">sa-Deva</code> for Sanskrit text in the Devanāgarī script and <code class="prettyprint">sa-Latn</code> for Sanskrit text in Roman transliteration.</li>
+    <li><code class="prettyprint">@xml:id</code>: this is the unique identifier of the text. It can and should be based on the abbreviations provided in SARIT’s directory of texts.</li>
+  </ul>
+
+<p>The <code class="prettyprint">&lt;text&gt;</code> element contains the obligatory <code class="prettyprint">&lt;body&gt;</code> element, which in turn contains the body of the text. The top-level <code class="prettyprint">&lt;text&gt;</code> element may also contain the elements <code class="prettyprint">&lt;front&gt;</code> and <code class="prettyprint">&lt;back&gt;</code>, for front matter (introductions, etc.) and back matter (notes, etc.) respectively.</p>
+
+<p>Example for a text encoded in Roman transliteration:</p>
+
+<pre class="prettyprint linenums">
+&lt;text xml:lang="sa-Latn" xml:id="RaŚrīṬī"&gt;
+    &lt;body&gt;
+        ....
+    &lt;/body&gt;
+&lt;/text&gt;
+</pre>
+
+<p>Example for a text encoded in Devanāgarī:</p>
+
+<pre class="prettyprint linenums">
+&lt;text xml:lang="sa-Deva" xml:id="KāAnu"&gt;
+    &lt;body&gt;
+        ....
+    &lt;/body&gt;
+&lt;/text&gt;
+</pre>
+
+<h3>Structural divisions</h3>
+
+<p>Most Sanskrit texts are divided into divisions: <em>sarga</em>s in a <em>mahākāvya</em>; <em>aṅka</em>s in a <em>nāṭaka</em>, <em>adhyāya</em>s in various <em>śāstra</em>s, and so on. These divisions can be further subdivided. For example, each <em>adhyāya</em> of the Mīmāṃsā <em>śāstra</em> is comprised of <em>pāda</em>s. SARIT uses the <code class="prettyprint">&lt;div&gt;</code> element for all such divisions. The <em>kind</em> of division can be represented with the <code class="prettyprint">@type</code> attribute. There can be many types of divisions, but the following common types should work “out of the box” with SARIT’s stylesheets:</p>
+  <ul>
+    <li><code class="prettyprint">@type="adhyāya"</code></li>
+    <li><code class="prettyprint">@type="pāda"</code></li>
+    <li><code class="prettyprint">@type="adhikaraṇa"</code></li>
+    <li><code class="prettyprint">@type="pariccheda"</code></li>
+    <li><code class="prettyprint">@type="prakāśa"</code></li>
+    <li><code class="prettyprint">@type="ucchvāsa"</code></li>
+    <li><code class="prettyprint">@type="parvan"</code></li>
+    <li><code class="prettyprint">@type="sarga"</code></li>
+    <li><code class="prettyprint">@type="aṅka"</code></li>
+    <li><code class="prettyprint">@type="javanikāntara"</code></li>
+  </ul>
+
+<h4>xml:ids</h4>
+
+<p><em>This section is currently being rewritten in consideration of the requirements of the new SARIT platform.</em></p>
+
+<p style="color:404040;">All of these structural divisions must have an <code class="prettyprint">@xml:id</code>. These should incorporate the <code class="prettyprint">@xml:id</code> of the <code class="prettyprint">&lt;text&gt;</code> element. For example:</p>
+  <ul  style="color:404040;">
+    <li><code class="prettyprint">xml:id="RaŚrīṬī#pariccheda-1__sutra-1"</code> for the first <em>sūtra</em> of the first <em>pariccheda</em> in the <em>Ratnaśrīṭīka</em>.</li>
+    <li><code class="prettyprint">xml:id="ŚāBhā#adhyāya-2__pāda-1__adhikaraṇa-2"</code> for the second <em>adhikaraṇa</em> in the first <em>pāda</em> of the second <em>adhyāya</em> of the <em>Śābharabhāṣya</em>.</li>
+  </ul>
+
+<h4>Headers</h4>
+
+<p>The divisions of a text are often introduced by a titular phrase that SARIT will encode with the <code class="prettyprint">&lt;head&gt;</code> element. This element must appear at the very beginning of a division.</p>
+
+<div class="example">
+  <img src="images/div-img2.png" width="500px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;div n="2"&gt;
+    &lt;head&gt;द्वितीयोऽध्यायः&lt;/head&gt;
+    &lt;div&gt;
+        &lt;p&gt;रसलक्षणमाह—&lt;/p&gt;
+        &lt;ab type="sutra" n="1"&gt;
+            &lt;label type="serial"&gt;२६)&lt;/label&gt;
+            विभावानुभावव्यभिचारिभिरभिव्यक्तः स्थायी भावा रसः ॥ १ ॥
+        &lt;/ab&gt;
+        ...
+</pre>
+
+<h4>Trailers</h4>
+
+<p>Divisions also often end with a trailer, which can be represented with the element <code class="prettyprint">&lt;trailer&gt;</code>:
+
+<div class="example">
+  <img src="images/div-img3.png" width="500px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;p&gt;यद्यपि सर्वत्र काव्येऽनन्ते विभानादिरूपतया रसपर्यवसानं, तथापि
+स्फुटस्य रसस्यानुपम्भादव्यङ्ग्यमेतत् काव्यमुक्तम ।&lt;/p&gt;
+&lt;trailer&gt;
+    इत्याचार्य&lt;persName key="#Hemacandra"&gt;श्रीहेमचन्द्र&lt;/persName&gt;विरचिताया&lt;title key="#ACū"&gt;मलङ्कारचूडामणि&lt;/title&gt;संज्झस्वोपज्ञ-
+    &lt;title key="#KāAnu"&gt;काव्यानुशासन&lt;/title&gt;वृत्तौ रसभावतदाभासकाव्यभेदप्रतिपादनो द्वितीयऽध्यायः ॥
+&lt;/trailer&gt;
+&lt;/div&gt;
+</pre>
+
+<h3>Textual layers</h3>
+
+<p>Sanskrit texts often incorporate multiple texts as “layers” within a single text. This is most often the case when the text is a <em>commentary</em> on a <em>root-text</em>: in such cases, the commentary might incorporate the base text, and it is important to distinguish between the two layers. Sometimes a text might include a <em>base text</em> along with two (or more) commentaries, and in those cases, it is necessary to distinguish between the base text and commentary layers, as well as between the different commentaries.</p>
+
+<p>The general solution is to treat one commentary as the main text, for the purposes of the TEI document, and to label the portions of the root-text (and other commentaries) that are included within it as <em>quotations</em>. Continuous portions of root-text and commentary should be included within the same structural unit (<code class="prettyprint">&lt;div&gt;</code>), as in the following example.</p>
+
+<div class="example">
+  <img src="images/div-img1.png" alt="example" width="500px">
+</div>
+
+<pre class="prettyprint linenums">
+&lt;div class="section" n="1.18a"&gt;
+    &lt;p&gt;
+        अथ &lt;term&gt;संग्रहः&lt;/term&gt;—
+    &lt;/p&gt;
+    &lt;quote type="base"&gt;
+    &lt;lg n="18a" next="18b"&gt;
+        &lt;l part="I"&gt;संग्रहः सामदानोक्तिर्&lt;/;&gt;
+    &lt;/lg&gt;
+    &lt;/quote&gt;
+    &lt;p&gt;
+        यथा &lt;title key="#Ratnā"&gt;रत्नावल्याम्&lt;/title&gt; &lt;ref cRef="Ratnā.pp.103"&gt;प॰ १०३&lt;/ref&gt;—
+        &lt;quote&gt;
+            &lt;p&gt;साधु वयस्य, साधु । इदं ते पारितोषिकम् &lt;/p&gt;
+            &lt;stage&gt;इति कटकं ददाति&lt;/stage&gt;
+        &lt;/quote&gt;
+    इत्याभ्यां सामदानाभ्याम् विदूषकस्य सागरिकासमागमकारिणः संग्रहात् संग्रह इति ।
+    &lt;/p&gt;
+&lt;/div&gt;
+</pre>
+
+<p>In this case, the “base” is the <em>Daśarūpa</em> of Dhanañjaya, which is composed in verse, and the prose commentary that surrounds it is the <em>Avaloka</em> of Dhanika. The “default” way to mark elements of a base text that are embedded in a commentary is through the quotation element <code class="prettyprint">&lt;quote type="base"&gt;</code>.</p>
+
+<p>In the following example the base text is a sūtra, which is encoded with the <code class="prettyprint">&lt;ab&gt;</code> element.</p>
+
+<div class="example">
+  <img src="images/div-img4.png" width="500px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;div&gt;
+    &lt;p&gt;
+        तत्रात्मस्थमाह—
+    &lt;/p&gt;
+    &lt;quote type="base"&gt;
+    &lt;ab n="10"&gt;
+        &lt;label type="serial"&gt;३५)&lt;/label&gt;
+        उत्तममध्यमाधमेषु स्मितिविहसितापहसितैः स आत्मस्थस्त्रेधा ॥ १० ॥
+    &lt;/ab&gt;
+    &lt;/quote&gt;
+    &lt;p&gt;स इतिहासः &lt;/p&gt;
+    ...
+&lt;/div&gt;
+</pre>
+
+<p>In such cases, there is no need to explicitly label the commentary, because any portion of the text that is not explicitly labelled as the “base text” is assumed to be part of the commentary.</p>
+
+<h3>Pagination</h3>
+
+<p><b>How do I encode the pagination of the source edition?</b> The beginning of a new page in the source edition should be marked with the element <code class="prettyprint">&lt;pb&gt;</code>. Its only required attribute is <code class="prettyprint">@n</code> (for the number of the page). The <code class="prettyprint">&lt;pb&gt;</code> element also has an optional <code class="prettyprint">@ed</code> element to specify the edition, in case the TEI document uses multiple printed editions as sources. The value of <code class="prettyprint">@ed</code> should be explained elsewhere in the document (for example, in the <code class="prettyprint">&lt;encodingDesc&gt;</code> element of the TEI Header). <b>Example</b> for page 89 (printed <span class="sa">८९</span>) in PK’s (i.e., Parikh and Kulkarni’s) edition of the <em>Kāvyānuśāsana</em>:</p>
+
+<pre class="prettyprint linenums">
+&lt;pb n="89" ed="PK"/&gt;
+</pre>
+
+<p><b>Where do I place the <code class="prettyprint">&lt;pb&gt;</code> element?</b> SARIT requires that milestone markers such as <code class="prettyprint">&lt;pb&gt;</code> are placed <em>inside</em> of a block-level element such as <code class="prettyprint">&lt;p&gt;</code> or <code class="prettyprint">&lt;lg&gt;</code>. Think of it this way: since page-breaks sometimes (but not always) occur in the middle of a paragraph or verse, we prefer to <em>always</em> put a page-break element inside a paragraph or verse (even if it is the first element in the paragraph or verse) rather than sometimes inside and sometimes outside.</p>
+
+<h1>Basic elements</h1>
+
+<p>All of the following “basic elements” are treated as block-level elements, and they therefore require an <code class="prettyprint">@xml:id</code>. The <code class="prettyprint">@xml:id</code> should make reference to the <code class="prettyprint">@xml:id</code>s of the <code class="prettyprint">&lt;text&gt;</code> element and the structural division (<code class="prettyprint">&lt;div&gt;</code>) to which the element belongs. Otherwise, the <code class="prettyprint">@xml:id</code> may take any form, so long as it is unique.</p>
+
+<h2>Prose</h2>
+
+<p>Prose paragraphs should be encoded using TEI’s <code class="prettyprint">&lt;p&gt;</code> element.</p>
+
+<div class="example">
+  <img src="images/p-img1.png" width="400px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;p&gt;देवमुनिगुरुनृपपुत्रविषया तु भाव एव न पुना रसः ।&lt;/p&gt;
+</pre>
+
+<h2>Sūtras</h2>
+
+<p>Sūtras are like paragraphs, but they are formatted differently (without indentation, for example) and they do not have the “semantic baggage” of a prose paragraph. SARIT recommends the use of the <code class="prettyprint">&lt;ab&gt;</code> element with the attribute <code class="prettyprint">@type="sutra"</code>.
+
+<p>In the following example, the <code class="prettyprint">&lt;ab&gt;</code> element includes, in addition to the text of the sutra, two typed <em>labels</em> that provide, respectively, the serial number of the <em>adhikaraṇa</em> in which the sutra occurs, and the position (<em>pūrvapakṣa</em>, <em>uttarapakṣa</em>, or <em>siddhānta</em>) that the sutra represents.</p>
+
+<div class="example">
+  <img src="images/sutra-img1.png" alt="example" width="500px"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;ab type="sutra" n="2"&gt;
+    &lt;label type="adhikarana" rend="squarebrackets"&gt;2&lt;/label&gt;
+    एकस्यैवं पुनः श्रुतिरविशेषादनर्थकं हि स्यात् ॥ २
+    &lt;label type="position" rend="doubledandas"&gt;सि॰&lt;/label&gt;
+&lt;/ab&gt;
+&lt;p&gt; समिधो यजति, तनूनपातं यजति इत्येवमादिः पञ्चकृत्वोऽभ्यस्तो ...
+</pre>
+
+<h2>Verse</h2>
+
+<p>The basic unit of verse in the traditions for which TEI was developed is the <em>line</em>. Sanskrit verses, by contrast, are usually divided into four into four “quarters.” The most common types of verses, however, are usually printed on two typographic lines, each corresponding to two “quarters.”</p>
+
+<p>The general solution we adopt is to represent <em>each verse</em> of the Sanskrit text with the “line group” element (<code class="prettyprint">&lt;lg&gt;</code>). The typographic lines are represented with the “line” element (<code class="prettyprint">&lt;l&gt;</code>). <em>Generally speaking</em>, everything from the beginning of the verse to to first <em>daṇḍa</em> is included in the first <code class="prettyprint">&lt;l&gt;</code> element, and everything from the first <em>daṇḍa</em> to the final double <em>daṇḍa</em> is included in the second <code class="prettyprint">&lt;l&gt;</code> element.</p>
+
+<p>Verses <em>generally</em> have a number or another identifying label, which should be expressed in the <code class="prettyprint">@n</code> attribute. In most cases, the value of <code class="prettyprint">@n</code> will simply duplicate the number that is printed at the end of the verse, which is usually its serial number in the current division of the text.</p>
+
+<p>At this point, it is not recommended to add <code class="prettyprint">@xml:id</code> attributes, since these will be added automatically and generated (in part) from the label supplied in the <code class="prettyprint">@n</code> attribute.</p>
+
+<p>The <code class="prettyprint">&lt;lg&gt;</code> element may also have a <code class="prettyprint">@type</code> attribute, which is useful in the case that a text has several different series of verses. For example, in Bhoja’s <em>Sarasavatīkaṇṭhābharaṇa</em>, the <em>kārikā</em>s are numbered separately from the example-verses (with <code class="prettyprint">@type="udāharaṇa"</code>).</p>
+
+<div class="example">
+  <img src="images/lg-img1.png" width="300px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;lg n="1"&gt;
+    &lt;l&gt;स्वाध्यायविधिवाक्यार्थविचारे प्रयतामहे ।&lt;/l&gt;
+    &lt;l&gt;प्रभाकरगुरोर्दृष्ट्या मीमांसारम्भसिद्धये ॥ १ ॥&lt;/l&gt;
+&lt;/lg&gt;
+</pre>
+
+<p>When the editor has printed the four “quarters” of a verse separately, we have a situation in which the metrical “line” (in the sense of a <em>pādayuga</em>) no longer corresponds to a typographical “line.” In these situations, SARIT recommends retaining <code class="prettyprint">&lt;l&gt;</code> in its signification as a metrical line or <em>pādayuga</em>, and inserting a typed “line-break” (<code class="prettyprint">&lt;lb&gt;</code>) element in order to represent the typographic setting of the verse.</p>
+
+<div class="example">
+  <img src="images/lg-img2.png" width="500px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;p&gt;&lt;quote&gt;
+    &lt;lg&gt;
+        &lt;l&gt;
+            साहङ्कारे मनसि न शमं याति जन्मप्रबन्धो &lt;lb type="quarter"/&gt;
+            नाहङ्कारश्चलति हृदयादात्मदृष्टौ च सत्याम ।
+        &lt;/l&gt;
+        &lt;l&gt;
+            अन्यः शस्ता जगति भवतो नास्ति नैरात्म्यवादी &lt;lb type="quarter"/&gt;
+            नान्यस्तस्मादुपशमविधेस्त्वन्मतादस्ति मार्गः ॥
+        &lt;/l&gt;
+    &lt;/lg&gt;  
+&lt;/quote&gt; इति । &lt;ref cRef="TaPa.105"&gt;त॰ प॰ १०५&lt;/ref&gt;&gt;/p&gt;
+</pre>
+
+<p>When verses are printed as four lines, they are often printed with an indentation before the second and fourth “quarters.” This can be reflected with <code class="prettyprint">@rend="indentafter"</code> attribute.</p>
+
+<div class="example">
+  <img src="images/lg-img3.png" width="500px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;quote&gt;
+    &lt;lg n="96"&gt;
+        &lt;l&gt;
+            यैः शान्तरागरुचिभिः परमाणुभिस्त्वं &lt;lb type="quarter" rend="indentafter"/&gt;
+            निर्मापितस्त्रिभुवनैकललामभूत ।
+        &lt;/l&gt;
+        &lt;l&lt;
+            तावन्त एव खलु तेऽप्यणवः पृथिव्यां &lt;lb type="quarter" rend="indentafter"/&gt;
+            यत्ते समानमपरं न हि रूपमस्ति ॥ ९६ ॥
+        &lt;/l&gt;
+    &lt;/lg&gt;
+&lt;/quote&gt;
+&lt;ref&gt;भक्तामर॰&lt;/ref&gt;
+</pre>
+
+<p>Sometimes the parts of a verse are broken up within a text, for example when a commentator breaks up a verse to discuss its components separately. In these cases, every verse-fragment should be contained in an <code class="prettyprint">@lg</code> element with the attributes <code class="prettyprint">@next</code>, <code class="prettyprint">@prev</code>, or both.</p>
+
+<p>All of the verse-fragments should have an identifying label (<em>a</em>, <em>b</em>, <em>c</em> etc.), e.g. <code class="prettyprint">@n="27c"</code>. The value of <code class="prettyprint">@next</code> and <code class="prettyprint">@prev</code> should refer to these identifying labels, e.g., <code class="prettyprint">@next="27d"</code>.</p>
+
+<p>These attributes will applications to reconstitute the whole verse. The labelling convention will allow applications to identify “verse 27” as this reconstituted verse in case there is no element <code class="prettyprint">&lt;lg n="27"&gt;</code> to be found. However, it will not join fragmentary <code class="prettyprint">&lt;l&gt;</code> elements into a single element. Therefore it is recommended to use the <code class="prettyprint">@part</code> attribute on any fragmentary <code class="prettyprint">&lt;l&gt;</code> attributes: <code class="prettyprint">I</code> for an initial fragment (e.g., <em>pāda</em>s a or c) and <code class="prettyprint">F</code> for a final fragment (e.g., <em>pāda</em>s b or d), or <code class="prettyprint">M</code> for a medial fragment if such a case occurs.</p>
+
+<div class="example">
+  <img src="images/part-img1.png" alt="example" width="500px"/>
+</div>
+
+<pre class="prettyprint linenums"/>
+&lt;div type="section" n="27c"&gt;
+    &lt;p&gt;&lt;term&gt;परिन्यास&lt;/term&gt;माह—&lt;/p&gt;
+    &lt;lg type="mūla" n="27c" prev="27b" next="27d"&gt;
+        &lt;l part="I"&gt;
+            तन्निष्पत्तिः परिन्यासो
+        &lt;/l&gt;
+    &lt;/lg&gt;
+    &lt;p&gt;
+        यथा तत्रैव &lt;ref cRef="Ratnā.1.8"&gt;(रत्ना॰ १।८)&lt;/ref&gt;—
+        &lt;quote&gt;
+            &lt;lg&gt;
+                &lt;l&gt;प्रारम्भेऽस्मिन् स्वामिनो वृद्धिहेतौ दैवे चेत्थं दत्तहस्तावलम्बने ।&lt;/l&gt;
+                &lt;l&gt;सिद्धेर्भ्रान्तिर्नास्ति सत्यं तथापि स्वेच्छाकारी भीत एवास्मि भर्तुः ॥&lt;/l&gt;
+            &lt;/lg&gt;
+        &lt;/quote&gt;
+    इत्यनेन यौगन्धरायणः स्वव्यापारस्य दैवयोगात् निष्पत्तिमुक्तवानिति परिन्यासः ।
+    &lt;/p&gt;
+&lt;/div&gt;&lt;!-- section !--&gt;
+&lt;div type="section" n="27d"&gt;
+    &lt;p&gt;&lt;term&gt;विलोभन&lt;/term&gt;माह—&lt;/p&gt;
+    &lt;lg type="mūla" n="27d" prev="27c"&gt;
+        &lt;l part="F"&gt;
+            गुणाख्यानाद् विलोभनम् ॥ २७ ॥
+        &lt;/l&gt;
+    &lt;/lg&gt;
+&lt;/div&gt;&lt;!-- section !--&gt;
+</pre>
+
+<div class="example">
+  <img src="images/lg-img4.png" alt="example" width="500px"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;div type="section" n="7b"&gt;
+  &lt;lg type="mūla" n="7b" prev="7a" next="7c"&gt;
+    &lt;l part="F"&gt;
+      रूपं दृश्र्यतयोच्यते ।
+    &lt;/l&gt;
+  &lt;/lg&gt;
+  &lt;p&gt;तदेव नाट्यं दृश्यमानतया रूपमित्युच्यते, नीलादिरूपवत् ।&lt;/p&gt;
+&lt;/div&gt;&lt;!-- section !--&gt;
+&lt;div type="section" n="7c"&gt;
+  &lt;lg type="mūla" n="7c" prev="7b" next="7d"&gt;
+    &lt;l part="I"&gt;
+      रुपकं तत्समारोपाद्
+    &lt;/l&gt;
+  &lt;/lg&gt;
+  &lt;p&gt;नटे रामाद्यवस्थारोपेण वर्तमानत्वाद् रूपकम् । मुखचन्द्रादिवदित्येकस्मिन्नर्थे प्रवर्तमानस्य शब्दत्रयस्य &lt;quote&gt;‘इन्द्रः पुरंदरः शक्रः’&lt;/quote&gt; इतिवत् प्रवृत्तिनिमित्तभेदो दर्शितः ।&lt;/p&gt;
+&lt;/div&gt;&lt;!-- section !--&gt;
+</pre>
+
+<p>In these examples, the containing division (<code class="prettyprint">&lt;div type="section"&gt;</code>), which contains the text of the <em>Avaloka</em> in addition to the fragmented verses of the <em>Daśarūpa</em>, has the same label as the fragmented verses themselves. This is fine, because any application will reconstitute the verses <em>only</em> from <code class="prettyprint">&lt;lg&gt;</code> elements that have the <code class="prettyprint">@next</code> or <code class="prettyprint">@prev</code> attributes.</p>
+
+<p>The <code class="prettyprint">@part</code> attribute should also be used for <em>quoted</em> verses. In these cases, the value <code class="prettyprint">Y</code> (indicating that the line is incomplete) is sufficient. For example:</p>
+
+<pre class="prettyprint linenums">
+&lt;quote&gt;
+  &lt;lg&gt;
+    &lt;l&gt;लोकावतारणार्थं च भावा नाथेन देशिताः ।&lt;/l&gt;
+    &lt;l part="Y"&gt; तत्त्वतः क्षणिका नैते— ॥&lt;/l&gt;
+  &lt;/lg&gt;
+&gt;/quote&gt;
+&lt;ref cRef="BoCaAPa.pp.376">बोधि॰ पं—३७६ । &lt;/ref&gt;
+</pre>g
+
+<p>Pratīkas are special kinds of references. They consist of the first few words of a passage. They are mostly found in commentaries, where they refer back to a passage in the root-text. SARIT uses <code class="prettyprint">&lt;ref type="lemma"&gt;</code> to encode pratīkas, with the <code class="prettyprint">@target</code> attribute pointing to the <code class="prettyprint">@xml:id</code> of the root-text to which the pratīka refers.</p>
+
+<div class="example">
+  <img src="images/ref-img1.png" width="500px" alt="example"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;p&gt;
+    &lt;ref type="lemma" target="#ΚāAnu.2.1"&gt;विभावै&lt;app&gt;
+        &lt;lem&gt;रिति&lt;/lem&gt;
+        &lt;rdg wit="#D"&gt;रपि&lt;/lem&gt;
+    &lt;/app&gt;&lt;/ref&gt; । यदाह &lt;persName key="#Bharata"&gt;मुनिः&lt;/name&gt;—
+&lt;/p&gt;
+</pre>
+
+<h2>Semantic annotation</h2>
+
+<p>The category of “semantic annotation” covers names, dates, people and places, as well as technical terms, and anything else that does not fall under the above categories. The most important aspect of most of these annotations is <em>normalization</em>, i.e., ensuring that a single entity is referred to across all annotation instances.</p>
+
+<h3>Persons and titles</h3>
+
+<p>The names of <b>persons</b>, especially authors, should be encoded using the element <code class="prettyprint">&lt;persName&gt;</code>. Since names can take various forms (e.g., <em>Kumārila</em>, <em>Kumārilabhaṭṭa</em>, <em>Ācārya</em>, <em>Bhaṭṭapāda</em>), and since each of these forms can appear in different cases and <em>sandhi</em>-forms, SARIT requires the use of a <em>normalized</em> form supplied by the <code class="prettyprint">@key</code> attribute. This attribute refers to a list of persons (either a <code class="prettyprint">&lt;listPerson&gt;</code> element defined elsewhere in the document, or SARIT’s global directory of persons), and it ensures that every occurrence of a name has the “same” reference.</p>
+
+<p>Similarly, the <b>titles</b> of works should be encoded using the element <code class="prettyprint">&lt;title&gt;</code>. SARIT requires the use of the <code class="prettyprint">@key</code> attribute to link the title with one of the works included in SARIT’s canonical reference system. Please check SARIT’s <a href="">list of works</a> for how to refer to the work as a canonical reference.</p>
+
+<p>Note that these elements should only be used for persons and works that <em>the author of the text</em> has explicitly referred to, not for references that the editor has supplied (for which see the section on quotations above).</p>
+
+<p><em>The reference of each name and title comes from the <code class="prettyprint">@key</code> element.</em> Thus there is no problem if the <code class="prettyprint">&lt;persName&gt;</code> or <code class="prettyprint">&lt;title&gt;</code> include non-name and non-title words that have been joined to the name or title in <em>sandhi</em>.</p>
+
+<div class="example">
+  <img src="images/names-img1.png" alt="example" width="500px"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;p&gt;
+    तदिदमप्यन्तरस्तत्त्वशून्यं न विमर्दक्षमिति &lt;persName key="#Bhaṭṭatauta"&gt;भट्टतोतः&lt;/persName&gt; । तथा हि—अनु-
+    करणरूपो रस इति यदुच्यते तत् किं सामाजिकप्रतीत्यभिप्रायेण, उत नटाभि-
+    प्रायेण, किं वा वस्तुवृत्तविवेचकव्याख्यातृबुद्धिसमवलम्बनेन यथाहुः—व्याख्यातारः
+    खल्वेवं विवेचयन्तीति ।
+&lt;/p&gt;
+</pre>
+
+<div class="example">
+  <img src="images/names-img2.png" alt="example" width="500px"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;p&gt;
+    यथा &lt;title key="#KaMaṃ"&gt;कर्पूरमञ्जर्याम्&gt; &lt;ref cRef="KaMaṃ.1.23"&gt;१।२३&lt;/ref&gt;—
+    &lt;quote&gt;
+        &lt;sp&gt;
+        &lt;speaker&gt;भैरवानन्दः&lt;/speaker&gt;
+            &lt;lg&gt;
+                &lt;l&gt;रंडा चंडा दिक्खिदा धम्मदारा मज्जं मंसं पिज्जए खज्जए अ ।&lt;/l&gt;
+                &lt;l&gt;भिक्खा भोज्जं चम्मखंडं च सेज्जा कोलो धम्मो कस्स णो भादि रम्मो ॥&lt;/l&gt;
+            &lt;/lg&gt;
+        &lt;/sp&gt;
+    &lt;quote&gt;
+&lt;/p&gt;
+</pre>
+
+<p>For references to persons who cannot be identified, or only tentatively identified, such as <em>anye</em> “others” or <em>kecit</em> “some people,” use the <code class="prettyprint">&lt;name&gt;</code> element, which does not require a <code class="prettyprint">@key</code> attribute.</p>
+
+<h3>Dates</h3>
+
+<p><b>Dates</b> referred to in the text can be encoded with the element <code class="prettyprint">&lt;date&gt;</code>. This will almost always have to be accompanied by two attributes: <code class="prettyprint">@when</code>, giving the normalized form, and <code class="prettyprint">@calendar</code>, specifying the calendar in which the date is reckoned. The options for <code class="prettyprint">@calendar</code> are:</p>
+  <ul>
+    <li><code class="prettyprint">#Vikrama</code>: Vikrama era (58/57 BCE)</li>
+    <li><code class="prettyprint">#Shaka</code>: Śaka era (78 CE)</li>
+    <li><code class="prettyprint">#Kali</code>: Kali era (3102 BCE)</li>
+    <li><code class="prettyprint">#Vira</code>: era of Mahavir (527 BCE)</li>
+  </ul>
+
+<div class="example">
+  <img src="images/names-img3.png" alt="example" width="500px"/>
+</div>
+
+<pre class="prettyprint linenums">
+&lt;lg n="8" xml:id="lg-8"&gt;
+    &lt;l&gt;&lt;date when="1405" calendar="#Vikrama"&gt;शरगगनमनु(१४०५)मिताब्दे ज्येष्ठामूलीयधवलसप्तम्याम्&lt;/date&gt; ।&lt;/l&gt;
+    &lt;l&gt;निष्पन्नमिदं शास्त्रं श्रोत्रध्येत्रोः सुखं तन्यात् ॥ ८ ॥&lt;/l&gt;
+&lt;/lg&gt;
+</pre>
+
+<h3>Technical terms</h3>
+
+<p>Use the element <code class="prettyprint">&lt;term&gt;</code> for technical terms (such as might appear in a table of contents or an index). For example:</p>
+
+<div class="example">
+  <img src="images/div-img1.png" alt="example" width="500px">
+</div>
+
+<pre class="prettyprint linenums">
+&lt;div&gt;
+    &lt;p&gt;अथ &lt;term&gt;संग्रहः&lt;/term&gt;—&lt;/p&gt;
+    &lt;quote type="base"&gt;
+    &lt;lg&gt;
+        &lt;l part="Y"&gt;संग्रहः सामदानोक्तिर्&lt;/;&gt;
+    &lt;/lg&gt;
+    &lt;quote&gt;
+    ...
+&lt;/div&gt;
+</pre>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+  <script type="text/javascript" src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=xml"></script>
+  <script type="text/javascript" src="jquery.stoc.js"></script>
+  <script type="text/javascript">
+    $(function(){
+      $("#items").stoc({
+        search: "#container"
+      });
+    });
+  </script>
+</div><!-- container !-->
+</body>
+</html>
